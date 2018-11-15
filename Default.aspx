@@ -1605,9 +1605,86 @@
 
                         </ext:Panel>
 
+                        <ext:Panel ID="Tab7" Title="Discipline KPI" runat="server" Closable="false">
+                            <LayoutConfig>
+                                <ext:VBoxLayoutConfig Align="Stretch" />
+                            </LayoutConfig>
+                            <Items>
+                                <ext:Panel runat="server" ID="Panel6" Html="<br/><center>Dis Deduction KPI</center>" Height="30" Border="false" />
+                                <ext:Chart ID="Chart11"  runat="server" Animate="true" Shadow="true" InsetPadding="20" Flex="1">
+                                    <LegendConfig Position="Right" BoxStrokeWidth="0" /> 
+                                    <Store>
+                                        <ext:Store ID="storeDisDeKPI" runat="server" AutoLoad="false">                           
+                                            <Proxy>
+                                                <ext:AjaxProxy Url="data.ashx?object=DisDecKPI">
+                                                    <ActionMethods Read="GET" />                                                                                                                                                                                                
+                                                </ext:AjaxProxy>
+                                            </Proxy>
+                                            <Model>
+                                                <ext:Model ID="Model17" runat="server">
+                                                    <Fields>
+                                                        <ext:ModelField Name="Name" />
+                                                        <ext:ModelField Name="Deduction Cost(RMB)" Mapping="Data1" />
+                                                        <ext:ModelField Name="Deduction Rate(%)" Mapping="Data2"/>
+                                                        <ext:ModelField Name="MOM" />
+                                                    </Fields>
+                                                </ext:Model>
+                                            </Model>
+                                        </ext:Store>
+                                    </Store>
+                                    <Axes>
+                                        <ext:NumericAxis Fields="Deduction Cost(RMB)" Title="" Grid="true" Position="Left">
+                                            <Label>
+                                                <Renderer Handler="return moneyFormat2(value);"/>
+                                            </Label>
+                                        </ext:NumericAxis>
+                                        <ext:CategoryAxis Position="Bottom" Fields="Name" Title="">
+                                            <Label>
+                                                <Rotate Degrees="270" />
+                                            </Label>
+                                        </ext:CategoryAxis>
+                                        <ext:NumericAxis Fields="Deduction Rate(%)" Title="" Grid="false" Position="Right">                                                                
+                                        </ext:NumericAxis>
+                                    </Axes>
+                                    <Series>
+                                        <ext:ColumnSeries Axis="Left" XField="Name" YField="Deduction Cost(RMB)" Highlight="true">
+                                            <Tips runat="server" TrackMouse="true" Width="70" Height="28">
+                                                <Renderer Handler="this.setTitle(String(moneyFormat2(item.value[1])));" />
+                                            </Tips>                                                                                        
+                                        </ext:ColumnSeries>
+                                        <ext:LineSeries Axis="Right" Smooth="3" XField="Name" YField="Deduction Rate(%)" Highlight="true">
+                                            <Tips runat="server" TrackMouse="true" Width="60" Height="28">
+                                                <Renderer Handler="this.setTitle(String(item.value[1])+'%');" />
+                                            </Tips>                                                                
+                                            <Style Fill="#FF0033" Stroke="#FF6666" StrokeWidth="2" />
+                                            <Label Display="Over" FontSize="12" >
+                                                <Renderer Handler="return(String(item.value[1])+'%');"/>
+                                            </Label>                                                            
+                                        </ext:LineSeries>
+                                    </Series>                                                         
+                                </ext:Chart>
+                            </Items> 
+                            <BottomBar>
+                                <ext:Toolbar runat="server">
+                                   <Items>
+                                        <ext:ToolbarFill></ext:ToolbarFill>                                        
+                                        <ext:DateField runat="server" ID="dfDisDecKPIStart" Format="yyyy-MM" FieldLabel="Time Range" LabelWidth="72"></ext:DateField>
+                                        <ext:Label runat="server" Text="-"/>
+                                        <ext:DateField runat="server" ID="dfDisDecKPIEnd" Format="yyyy-MM"></ext:DateField>
+                                        <ext:Button runat="server" Text="Submit">
+                                            <Listeners>
+                                                <Click Handler="scatterStoreReload(#{storeDisDeKPI},#{dfDisDecKPIStart}.getValue(),#{dfDisDecKPIEnd}.getValue(),'true');" />
+                                            </Listeners>
+                                        </ext:Button>
+                                    </Items>
+                                </ext:Toolbar>
+                            </BottomBar>     
+
+                        </ext:Panel>
+
                      </Items>
                      <Listeners>
-                         <TabChange Handler="if(newTab.getId()=='Tab2'){scatterStoreReload(#{storeKPIScatter},#{dfKPIStart}.getValue(),#{dfKPIEnd}.getValue(),#{cbDistribution}.getValue());}else if(newTab.getId()=='Tab3'){scatterStoreReload(#{storeUserKPI},#{dfUserKPIStart}.getValue(),#{dfUserKPIEnd}.getValue(),'true');}else if(newTab.getId()=='Tab4'){scatterStoreReload(#{storeUserSample},#{dfUserSampleStart}.getValue(),#{dfUserSampleEnd}.getValue(),'true');}else if(newTab.getId()=='Tab5'){scatterStoreReload(#{storeContractorKPI},#{dfContractorKPIStart}.getValue(),#{dfContractorKPIEnd}.getValue(),#{cbContractorKPI}.getValue());}else if(newTab.getId()=='Tab6'){scatterStoreReload(#{storeUserPro},#{dfUserProStart}.getValue(),#{dfUserProEnd}.getValue(),#{cbDepart}.getValue());}" />
+                         <TabChange Handler="if(newTab.getId()=='Tab2'){scatterStoreReload(#{storeKPIScatter},#{dfKPIStart}.getValue(),#{dfKPIEnd}.getValue(),#{cbDistribution}.getValue());}else if(newTab.getId()=='Tab3'){scatterStoreReload(#{storeUserKPI},#{dfUserKPIStart}.getValue(),#{dfUserKPIEnd}.getValue(),'true');}else if(newTab.getId()=='Tab4'){scatterStoreReload(#{storeUserSample},#{dfUserSampleStart}.getValue(),#{dfUserSampleEnd}.getValue(),'true');}else if(newTab.getId()=='Tab5'){scatterStoreReload(#{storeContractorKPI},#{dfContractorKPIStart}.getValue(),#{dfContractorKPIEnd}.getValue(),#{cbContractorKPI}.getValue());}else if(newTab.getId()=='Tab6'){scatterStoreReload(#{storeUserPro},#{dfUserProStart}.getValue(),#{dfUserProEnd}.getValue(),#{cbDepart}.getValue());}else if(newTab.getId()=='Tab7'){scatterStoreReload(#{storeDisDecKPI},#{dfDisDecKPIStart}.getValue(),#{dfDisDecKPIEnd}.getValue(),'true');}" />
                      </Listeners>           
                 </ext:TabPanel>                                 
             </Items>              

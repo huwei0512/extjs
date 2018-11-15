@@ -213,6 +213,8 @@ namespace FCPortal
             dfContractorKPIEnd.SetValue(DateTime.Now);
             dfUserProStart.SetValue(DateTime.Now.AddMonths(-11));
             dfUserProEnd.SetValue(DateTime.Now);
+            dfDisDecKPIStart.SetValue(DateTime.Now.AddMonths(-11));
+            dfDisDecKPIEnd.SetValue(DateTime.Now);
         }
 
         protected void exportExcel(object sender, DirectEventArgs e)

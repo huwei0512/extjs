@@ -20,7 +20,7 @@ namespace FCPortal
     {
         //public static clsMSSQL.MsSql msSQL = new clsMSSQL.MsSql("Persist Security Info=False;User ID=sa;pwd=documentum;Initial Catalog=CPT;Data Source=10.137.12.32");//10.137.12.32
 
-        public static clsMSSQL.MsSql msSQL = new clsMSSQL.MsSql("Persist Security Info=False;User ID=sa;pwd=documentum;Initial Catalog=CPT;Data Source=10.137.51.11");//10.137.12.32
+        public static clsMSSQL.MsSql msSQL = new clsMSSQL.MsSql("Persist Security Info=False;User ID=sa;pwd=administrator123;Initial Catalog=CPT;Data Source=127.0.0.1");//10.137.12.32
 
         public static string sSQLRecent = " AND (Deleted is NULL and Blocked is NULL) AND not EXISTS (SELECT * from FC_SESRecord B WHERE A.SES_No=B.SES_No AND datediff(day, B.DateIn,GETDATE())>16 )";
         public static int iStartDay = 11;
@@ -163,7 +163,7 @@ namespace FCPortal
                 context.Response.Write(sOutPut);
                 return;
             }
-            if (sSource == "userKPI" || sSource == "userSample" || sSource == "contractorKPI" || sSource == "userPro")
+            if (sSource == "userKPI" || sSource == "userSample" || sSource == "contractorKPI" || sSource == "userPro" || sSource == "DisDecKPI")
             {
                 sNO = "test";
             }
@@ -175,7 +175,7 @@ namespace FCPortal
             }
             else if (!string.IsNullOrEmpty(sNO))
             {
-                if (sSource == "pie1" || sSource == "pie3" || sSource == "userKPI" || sSource == "userSample" || sSource == "contractorKPI"||sSource=="userPro")
+                if (sSource == "pie1" || sSource == "pie3" || sSource == "userKPI" || sSource == "userSample" || sSource == "contractorKPI"||sSource== "userPro" || sSource == "DisDecKPI")
                 {
                     string sOverAll = context.Request.Params["OverAll"];
                     if (string.IsNullOrEmpty(sOverAll))
@@ -486,6 +486,10 @@ namespace FCPortal
                 string sSum = (sType == "userKPI") ? "Deduction" : "Net_Value";
                 dt = msSQL.GetDataTable("SELECT [Section],SUM(" + sSum + "),SUM(Deduction)/SUM(Quotation) from ContractorKPI0 where " + sContractNOSQL + " DateMonth>='" + sDateMonthStart + "' and DateMonth<='" + sDateMonthEnd + "' and [Section] is not NULL GROUP BY [Section] ORDER BY [Section] ASC");
             }
+            else if (sType == "DisDecKPI")
+            {
+                dt = msSQL.GetDataTable("SELECT [Dis],SUM(Deduction),SUM(Deduction)/SUM(Quotation) from ContractorKPI0 where DateMonth>='" + sDateMonthStart + "' and DateMonth<='" + sDateMonthEnd + "' and [Dis] is not NULL GROUP BY [Dis] ORDER BY [Dis] ASC");
+            }
             else if (sType == "userSample")
             {
                 dt = msSQL.GetDataTable("SELECT [Section],COUNT(SES),SUM(Net_Value) from ContractorKPI0 where DateMonth>='" + sDateMonthStart + "' and DateMonth<='" + sDateMonthEnd + "' GROUP BY [Section] ORDER BY [Section] ASC");
@@ -534,7 +538,7 @@ namespace FCPortal
                 for (int i = 0; i < dt.Rows.Count; i++)
                 {
                     clsFCDataPie clsMain = new clsFCDataPie();
-                    if (sType == "pie3" || sType == "userKPI")
+                    if (sType == "pie3" || sType == "userKPI" || sType == "DisDecKPI")
                     {
                         clsMain.Name = dt.Rows[i][0].ToString().Trim().Replace("-", "");
                         clsMain.Data1 = double.Parse(dt.Rows[i][1].ToString().Trim());
