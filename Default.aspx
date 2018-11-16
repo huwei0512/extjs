@@ -1605,7 +1605,7 @@
 
                         </ext:Panel>
 
-                        <ext:Panel ID="Tab7" Title="Discipline KPI" runat="server" Closable="false">
+                        <ext:Panel ID="Tab7" Title="Deduction KPI" runat="server" Closable="false">
                             <LayoutConfig>
                                 <ext:VBoxLayoutConfig Align="Stretch" />
                             </LayoutConfig>
@@ -1633,7 +1633,7 @@
                                         </ext:Store>
                                     </Store>
                                     <Axes>
-                                        <ext:NumericAxis Fields="Deduction Cost(RMB)" Title="" Grid="true" Position="Left">
+                                        <ext:NumericAxis Fields="Deduction Cost(RMB)" Title="" Grid="true" Position="Left" Minimum="0">
                                             <Label>
                                                 <Renderer Handler="return moneyFormat2(value);"/>
                                             </Label>
@@ -1643,7 +1643,7 @@
                                                 <Rotate Degrees="270" />
                                             </Label>
                                         </ext:CategoryAxis>
-                                        <ext:NumericAxis Fields="Deduction Rate(%)" Title="" Grid="false" Position="Right">                                                                
+                                        <ext:NumericAxis Fields="Deduction Rate(%)" Title="" Grid="false" Position="Right" Minimum="0">                                                                
                                         </ext:NumericAxis>
                                     </Axes>
                                     <Series>
@@ -1684,7 +1684,7 @@
 
                      </Items>
                      <Listeners>
-                         <TabChange Handler="if(newTab.getId()=='Tab2'){scatterStoreReload(#{storeKPIScatter},#{dfKPIStart}.getValue(),#{dfKPIEnd}.getValue(),#{cbDistribution}.getValue());}else if(newTab.getId()=='Tab3'){scatterStoreReload(#{storeUserKPI},#{dfUserKPIStart}.getValue(),#{dfUserKPIEnd}.getValue(),'true');}else if(newTab.getId()=='Tab4'){scatterStoreReload(#{storeUserSample},#{dfUserSampleStart}.getValue(),#{dfUserSampleEnd}.getValue(),'true');}else if(newTab.getId()=='Tab5'){scatterStoreReload(#{storeContractorKPI},#{dfContractorKPIStart}.getValue(),#{dfContractorKPIEnd}.getValue(),#{cbContractorKPI}.getValue());}else if(newTab.getId()=='Tab6'){scatterStoreReload(#{storeUserPro},#{dfUserProStart}.getValue(),#{dfUserProEnd}.getValue(),#{cbDepart}.getValue());}else if(newTab.getId()=='Tab7'){scatterStoreReload(#{storeDisDecKPI},#{dfDisDecKPIStart}.getValue(),#{dfDisDecKPIEnd}.getValue(),'true');}" />
+                         <TabChange Handler="if(newTab.getId()=='Tab2'){scatterStoreReload(#{storeKPIScatter},#{dfKPIStart}.getValue(),#{dfKPIEnd}.getValue(),#{cbDistribution}.getValue());}else if(newTab.getId()=='Tab3'){scatterStoreReload(#{storeUserKPI},#{dfUserKPIStart}.getValue(),#{dfUserKPIEnd}.getValue(),'true');}else if(newTab.getId()=='Tab4'){scatterStoreReload(#{storeUserSample},#{dfUserSampleStart}.getValue(),#{dfUserSampleEnd}.getValue(),'true');}else if(newTab.getId()=='Tab5'){scatterStoreReload(#{storeContractorKPI},#{dfContractorKPIStart}.getValue(),#{dfContractorKPIEnd}.getValue(),#{cbContractorKPI}.getValue());}else if(newTab.getId()=='Tab6'){scatterStoreReload(#{storeUserPro},#{dfUserProStart}.getValue(),#{dfUserProEnd}.getValue(),#{cbDepart}.getValue());}else if(newTab.getId()=='Tab7'){scatterStoreReload(#{storeDisDeKPI},#{dfDisDecKPIStart}.getValue(),#{dfDisDecKPIEnd}.getValue(),'true');}" />
                      </Listeners>           
                 </ext:TabPanel>                                 
             </Items>              
